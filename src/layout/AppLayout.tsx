@@ -5,6 +5,7 @@ import { NewChatDialog } from '@/features/chats/NewChatDialog';
 import { ChatView } from '@/features/messages/ChatView';
 import { StandbyBanner } from '@/features/polling/StandbyBanner';
 import { usePoller } from '@/features/polling/usePoller';
+import { NotificationsBanner } from '@/features/settings/NotificationsBanner';
 import { ConfirmDialog } from '@/ui/ConfirmDialog';
 import { ChatsIcon, LogoutIcon, PlusIcon } from '@/ui/icons';
 import { useConnection } from '@/store/connection';
@@ -79,6 +80,7 @@ export function AppLayout() {
       </aside>
 
       <main className={styles.feed}>
+        <NotificationsBanner />
         <StandbyBanner />
         <ChatView />
       </main>
