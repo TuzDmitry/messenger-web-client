@@ -1,0 +1,25 @@
+# Dependencies & build
+node_modules
+dist
+dist-ssr
+*.local
+*.tsbuildinfo
+coverage
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editors / OS
+.idea
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+
+# Env
+.env*
+
+# Local notes
+TASK.md
+PLAN.md
+CLAUDE.local.md
