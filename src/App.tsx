@@ -1,5 +1,8 @@
+import { LoginScreen } from '@/features/auth/LoginScreen'
 import { AppLayout } from '@/layout/AppLayout'
+import { useSession } from '@/store/session'
 
 export function App() {
-  return <AppLayout />
+  const signedIn = useSession((state) => state.credentials !== null)
+  return signedIn ? <AppLayout /> : <LoginScreen />
 }

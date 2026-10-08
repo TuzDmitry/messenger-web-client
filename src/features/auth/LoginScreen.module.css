@@ -1,0 +1,113 @@
+/* Sizes follow web.max.ru's phone sign-in screen. */
+
+.screen {
+  display: flex;
+  min-height: 100%;
+  padding: 16px;
+  background: var(--feed-pattern) var(--bg-feed);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 580px;
+  margin: auto;
+  padding: 48px 16px 32px;
+  border: 0.8px solid var(--border-card);
+  border-radius: var(--radius-card);
+  background: var(--bg-panel);
+}
+
+/* Content column: 336px centered, like MAX */
+.title,
+.fields,
+.footer {
+  width: 100%;
+  max-width: 336px;
+}
+
+.title {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.advanced {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.advancedToggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  padding: 0 12px;
+  border: none;
+  background: none;
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--text-secondary);
+}
+
+.advancedToggle::before {
+  content: '';
+  border: 4px solid transparent;
+  border-left: 6px solid currentColor;
+  border-right-width: 0;
+  transition: transform 0.15s;
+}
+
+.advancedToggle[aria-expanded='true']::before {
+  transform: rotate(90deg);
+}
+
+.advancedToggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Collapsed: keeps its space so the centered card doesn't jump */
+.advancedBody[data-open='false'] {
+  visibility: hidden;
+}
+
+.formError {
+  min-height: 32px; /* two lines: the longest messages wrap once */
+  padding: 0 12px;
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--danger);
+}
+
+.footer {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}

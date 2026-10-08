@@ -20,13 +20,21 @@
   --danger: #ff5c5c;
 
   --divider: rgba(255, 255, 255, 0.06);
+  --border-card: rgba(255, 255, 255, 0.1);
+
+  --bg-button-disabled: rgba(255, 255, 255, 0.12);
+  --text-disabled: rgba(255, 255, 255, 0.28);
+  --text-placeholder: rgba(255, 255, 255, 0.4);
 
   --bubble-in: linear-gradient(239deg, #3b3f5e 0%, #373a4e 100%);
   --bubble-out: linear-gradient(239deg, #8849b4 0%, #735acd 50%, #5d6ae5 100%);
 
   --radius-bubble: 16px;
   --radius-bubble-tail: 6px;
-  --radius-input: 12px;
+  --radius-input: 12px; /* compact inputs: sidebar search */
+  --radius-field: 16px; /* form fields */
+  --radius-button: 20px;
+  --radius-card: 28px;
   --radius-chip: 10px;
 
   --nav-width: 77px;

@@ -1,0 +1,56 @@
+/* web.max.ru form field */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  padding: 0 12px;
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--text-secondary);
+}
+
+.input {
+  height: 52px;
+  padding: 6px 12px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-field);
+  background: var(--bg-input);
+  font-size: 15px;
+  line-height: 20px;
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--text-placeholder);
+}
+
+.input:focus-visible {
+  border-color: var(--accent);
+}
+
+.input:disabled {
+  opacity: 0.6;
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+
+.hint,
+.error {
+  min-height: 16px;
+  padding: 0 12px;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.hint {
+  color: var(--text-secondary);
+}
+
+.error {
+  color: var(--danger);
+}
