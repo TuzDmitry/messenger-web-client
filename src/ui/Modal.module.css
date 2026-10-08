@@ -1,0 +1,44 @@
+/* web.max.ru modal */
+.dialog {
+  width: calc(100% - 32px);
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-modal);
+  background: var(--bg-panel);
+  color: var(--text);
+}
+
+.dialog::backdrop {
+  background: var(--bg-backdrop);
+}
+
+/* Padding lives here, so clicks on it don't count as backdrop clicks */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 24px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 24px;
+}
+
+.title {
+  font-size: 24px;
+  line-height: 28px;
+  font-weight: 600;
+}
+
+.description {
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--text-secondary);
+}
+
+.body {
+  padding: 0 24px 24px;
+}

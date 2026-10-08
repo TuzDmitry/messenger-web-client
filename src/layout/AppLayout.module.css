@@ -57,7 +57,32 @@ button.navItem:focus-visible {
 }
 
 .sidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 18px 16px 12px;
+}
+
+/* MAX "Start chatting": 32px blue circle */
+.newChatButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent-button);
+}
+
+.newChatButton:hover {
+  filter: brightness(1.1);
+}
+
+.newChatButton:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .sidebarTitle {
