@@ -5,6 +5,7 @@ import styles from './ConfirmDialog.module.css';
 type ConfirmDialogProps = {
   open: boolean;
   title: string;
+  description?: string;
   confirmLabel: string;
   cancelLabel: string;
   onConfirm: () => void;
@@ -18,6 +19,7 @@ type ConfirmDialogProps = {
 export function ConfirmDialog({
   open,
   title,
+  description,
   confirmLabel,
   cancelLabel,
   onConfirm,
@@ -25,6 +27,7 @@ export function ConfirmDialog({
 }: ConfirmDialogProps) {
   const ref = useRef<HTMLDialogElement>(null);
   const titleId = useId();
+  const descriptionId = useId();
 
   useEffect(() => {
     const dialog = ref.current;
@@ -49,16 +52,27 @@ export function ConfirmDialog({
       ref={ref}
       className={styles.dialog}
       aria-labelledby={titleId}
+      aria-describedby={description ? descriptionId : undefined}
       onCancel={handleEscape}
       onClick={handleBackdropClick}
     >
       <div className={styles.content}>
-        <h2
-          id={titleId}
-          className={styles.title}
-        >
-          {title}
-        </h2>
+        <header className={styles.header}>
+          <h2
+            id={titleId}
+            className={styles.title}
+          >
+            {title}
+          </h2>
+          {description && (
+            <p
+              id={descriptionId}
+              className={styles.description}
+            >
+              {description}
+            </p>
+          )}
+        </header>
         <div className={styles.actions}>
           <Button
             size="medium"

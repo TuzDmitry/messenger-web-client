@@ -1,0 +1,37 @@
+.avatar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* Own palette in the spirit of MAX's gradient avatars */
+.color0 {
+  background: linear-gradient(135deg, #3d8bff, #005fe0);
+}
+
+.color1 {
+  background: linear-gradient(135deg, #a66cff, #6a3dd8);
+}
+
+.color2 {
+  background: linear-gradient(135deg, #ff7aa8, #e0457b);
+}
+
+.color3 {
+  background: linear-gradient(135deg, #ffb35c, #f07f1a);
+}
+
+.color4 {
+  background: linear-gradient(135deg, #4fd1a5, #1fa37a);
+}
+
+.color5 {
+  background: linear-gradient(135deg, #5cc8ff, #2190d9);
+}

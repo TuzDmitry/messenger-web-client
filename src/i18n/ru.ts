@@ -5,6 +5,7 @@ export const ru = {
   },
   signOutDialog: {
     title: 'Выйти?',
+    description: 'Чаты и сообщения на этом устройстве будут удалены',
     cancel: 'Нет',
     confirm: 'Да',
   },
@@ -46,6 +47,8 @@ export const ru = {
   chats: {
     title: 'Чаты',
     empty: 'Здесь появятся ваши чаты',
+    you: 'Вы: ',
+    unread: (count: number) => `Непрочитанных: ${count}`,
   },
   feed: {
     noChatSelected: 'Выберите чат, чтобы начать общение',

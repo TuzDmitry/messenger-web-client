@@ -1,12 +1,12 @@
 import { useState } from 'react';
+import { signOut } from '@/features/auth/signOut';
+import { ChatList } from '@/features/chats/ChatList';
 import { ConfirmDialog } from '@/ui/ConfirmDialog';
 import { ChatsIcon, LogoutIcon } from '@/ui/icons';
-import { useSession } from '@/store/session';
 import { t } from '@/i18n';
 import styles from './AppLayout.module.css';
 
 export function AppLayout() {
-  const signOut = useSession((state) => state.signOut);
   const [confirmingSignOut, setConfirmingSignOut] = useState(false);
 
   function openSignOutDialog() {
@@ -42,7 +42,7 @@ export function AppLayout() {
         <header className={styles.sidebarHeader}>
           <h1 className={styles.sidebarTitle}>{t.chats.title}</h1>
         </header>
-        <p className={styles.placeholder}>{t.chats.empty}</p>
+        <ChatList />
       </aside>
 
       <main className={styles.feed}>
@@ -54,6 +54,7 @@ export function AppLayout() {
       <ConfirmDialog
         open={confirmingSignOut}
         title={t.signOutDialog.title}
+        description={t.signOutDialog.description}
         confirmLabel={t.signOutDialog.confirm}
         cancelLabel={t.signOutDialog.cancel}
         onConfirm={signOut}

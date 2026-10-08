@@ -21,11 +21,23 @@
   padding-top: 24px;
 }
 
-.title {
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   padding: 0 24px;
+}
+
+.title {
   font-size: 24px;
   line-height: 28px;
   font-weight: 600;
+}
+
+.description {
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--text-secondary);
 }
 
 .actions {
