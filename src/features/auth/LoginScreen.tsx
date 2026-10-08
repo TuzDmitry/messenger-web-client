@@ -1,4 +1,4 @@
-import { useId, useState, type FormEvent } from 'react';
+import { useId, useState, type ChangeEvent, type FormEvent } from 'react';
 import { Button } from '@/ui/Button';
 import { TextField } from '@/ui/TextField';
 import { useSession } from '@/store/session';
@@ -25,16 +25,27 @@ export function LoginScreen() {
   // apiUrl is optional (empty → default host), so only these two gate the button
   const canSubmit = values.idInstance.trim() !== '' && values.apiTokenInstance.trim() !== '';
 
-  const bind = (field: Field) => ({
-    name: field,
-    value: values[field],
-    error: fieldErrors[field],
-    onChange: (event: { target: { value: string } }) => {
-      setValues((prev) => ({ ...prev, [field]: event.target.value }));
-      setFieldErrors((prev) => ({ ...prev, [field]: undefined }));
-      setFormError(undefined);
-    },
-  });
+  // One handler for all fields: the input's `name` says which one changed
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    const field = event.target.name as Field;
+    const { value } = event.target;
+    setValues((prev) => ({ ...prev, [field]: value }));
+    setFieldErrors((prev) => ({ ...prev, [field]: undefined }));
+    setFormError(undefined);
+  }
+
+  function toggleAdvanced() {
+    setAdvancedOpen((open) => !open);
+  }
+
+  function bind(field: Field) {
+    return {
+      name: field,
+      value: values[field],
+      error: fieldErrors[field],
+      onChange: handleChange,
+    };
+  }
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -95,7 +106,7 @@ export function LoginScreen() {
               className={styles.advancedToggle}
               aria-expanded={advancedOpen}
               aria-controls={advancedId}
-              onClick={() => setAdvancedOpen((open) => !open)}
+              onClick={toggleAdvanced}
             >
               {t.auth.advanced}
             </button>
