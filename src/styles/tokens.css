@@ -44,6 +44,7 @@
   --nav-width: 77px;
   --sidebar-width: 394px;
   --header-height: 64px;
+  --feed-max-width: 740px; /* MAX centers messages and the composer in this column */
 
   /* Own pattern (not MAX's asset): sparse dots and rings at ~4% opacity */
   --feed-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' fill='none' stroke='%23fff' stroke-opacity='.05'%3E%3Ccircle cx='20' cy='24' r='6'/%3E%3Ccircle cx='86' cy='70' r='10'/%3E%3Cpath d='M60 14v10M55 19h10M24 92v8M20 96h8'/%3E%3Ccircle cx='100' cy='18' r='2' fill='%23fff' fill-opacity='.05'/%3E%3Ccircle cx='48' cy='100' r='2.5' fill='%23fff' fill-opacity='.05'/%3E%3C/svg%3E");

@@ -69,6 +69,18 @@ export const ru = {
       unexpected: 'Неожиданный ответ сервера',
     },
   },
+  composer: {
+    placeholder: 'Сообщение',
+    send: 'Отправить',
+  },
+  message: {
+    retry: 'Не отправлено. Повторить',
+    status: {
+      pending: 'Отправляется',
+      sent: 'Отправлено',
+      failed: 'Не отправлено',
+    },
+  },
   feed: {
     today: 'Сегодня',
     yesterday: 'Вчера',

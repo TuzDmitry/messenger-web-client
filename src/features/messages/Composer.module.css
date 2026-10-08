@@ -1,0 +1,70 @@
+/* web.max.ru composer: a floating pill in the centered 740px column */
+.wrapper {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: var(--feed-max-width);
+  margin: 0 auto;
+  padding: 0 16px 16px;
+}
+
+.composer {
+  display: flex;
+  gap: 4px;
+  align-items: flex-end;
+  min-height: 48px;
+  padding: 4px;
+  border-radius: var(--radius-field);
+  background: var(--bg-panel);
+}
+
+.input {
+  flex: 1;
+  /* ~8 lines, then it scrolls */
+  max-height: 180px;
+  padding: 10px 12px;
+  border: none;
+  background: none;
+  font-size: 16px;
+  line-height: 20px;
+  resize: none;
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--text-secondary);
+}
+
+.counter {
+  align-self: center;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-secondary);
+}
+
+/* ≈ MAX: the send button only appears once there is text, so its look is estimated */
+.send {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent-button);
+}
+
+.send:disabled {
+  background: none;
+  color: var(--text-disabled);
+  cursor: default;
+}
+
+.send:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+.send:focus-visible {
+  outline: 2px solid var(--accent);
+}

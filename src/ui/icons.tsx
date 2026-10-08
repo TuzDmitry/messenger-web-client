@@ -62,3 +62,57 @@ export function LogoutIcon(props: IconProps) {
     </svg>
   );
 }
+
+export function SendIcon(props: IconProps) {
+  return (
+    <svg
+      {...base}
+      {...props}
+    >
+      <path d="M12 19V5M5 12l7-7 7 7" />
+    </svg>
+  );
+}
+
+export function CheckIcon(props: IconProps) {
+  return (
+    <svg
+      {...base}
+      {...props}
+    >
+      <path d="M5 12.5l4.5 4.5L19 7.5" />
+    </svg>
+  );
+}
+
+export function ClockIcon(props: IconProps) {
+  return (
+    <svg
+      {...base}
+      {...props}
+    >
+      <circle
+        cx="12"
+        cy="12"
+        r="8"
+      />
+      <path d="M12 8v4l3 2" />
+    </svg>
+  );
+}
+
+export function AlertIcon(props: IconProps) {
+  return (
+    <svg
+      {...base}
+      {...props}
+    >
+      <circle
+        cx="12"
+        cy="12"
+        r="8"
+      />
+      <path d="M12 8v5M12 16h.01" />
+    </svg>
+  );
+}
