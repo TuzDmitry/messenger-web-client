@@ -1,9 +1,10 @@
-import { useId, useState, type ChangeEvent, type FormEvent } from 'react';
+import { useEffect, useId, useState, type ChangeEvent, type FormEvent } from 'react';
 import { Button } from '@/ui/Button';
 import { TextField } from '@/ui/TextField';
 import { useSession } from '@/store/session';
 import { t } from '@/i18n';
 import { credentialsSchema, DEFAULT_API_URL } from './credentialsSchema';
+import { clearLoginDraft, readLoginDraft, saveLoginDraft } from './loginDraft';
 import { verifyCredentials } from './verifyCredentials';
 import styles from './LoginScreen.module.css';
 
@@ -11,18 +12,19 @@ type Field = 'idInstance' | 'apiTokenInstance' | 'apiUrl';
 
 export function LoginScreen() {
   const signIn = useSession((state) => state.signIn);
-  const [values, setValues] = useState<Record<Field, string>>({
-    idInstance: '',
-    apiTokenInstance: '',
-    apiUrl: '',
-  });
+  // Restored after a reload (e.g. the phone unloaded the tab while the user copied the token)
+  const [values, setValues] = useState<Record<Field, string>>(readLoginDraft);
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<Field, string>>>({});
   // A notice from the last sign out (e.g. the token stopped working) is shown as the form error
   const notice = useSession((state) => state.notice);
   const [formError, setFormError] = useState<string | undefined>(notice ?? undefined);
   const [submitting, setSubmitting] = useState(false);
-  const [advancedOpen, setAdvancedOpen] = useState(false);
+  const [advancedOpen, setAdvancedOpen] = useState(() => values.apiUrl !== '');
   const advancedId = useId();
+
+  useEffect(() => {
+    saveLoginDraft(values);
+  }, [values]);
 
   // apiUrl is optional (empty → default host), so only these two gate the button
   const canSubmit = values.idInstance.trim() !== '' && values.apiTokenInstance.trim() !== '';
@@ -65,8 +67,13 @@ export function LoginScreen() {
     const result = await verifyCredentials(parsed.data);
     setSubmitting(false);
 
-    if (result.ok) signIn(parsed.data);
-    else setFormError(result.error);
+    if (!result.ok) {
+      setFormError(result.error);
+
+      return;
+    }
+    clearLoginDraft();
+    signIn(parsed.data);
   }
 
   return (
