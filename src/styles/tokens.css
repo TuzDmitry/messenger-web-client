@@ -16,7 +16,8 @@
   --text-secondary: rgba(255, 255, 255, 0.64);
 
   --accent: #4aa4ff;
-  --accent-button: #2b8cf7;
+  --accent-button: #007aff; /* MAX button--primary */
+  --bg-button-secondary: rgba(191, 194, 246, 0.26); /* MAX button--secondary */
   --danger: #ff5c5c;
 
   --divider: rgba(255, 255, 255, 0.06);
@@ -25,6 +26,8 @@
   --bg-button-disabled: rgba(255, 255, 255, 0.12);
   --text-disabled: rgba(255, 255, 255, 0.28);
   --text-placeholder: rgba(255, 255, 255, 0.4);
+
+  --bg-backdrop: rgba(0, 0, 0, 0.5); /* ≈ estimated from a screenshot */
 
   --bubble-in: linear-gradient(239deg, #3b3f5e 0%, #373a4e 100%);
   --bubble-out: linear-gradient(239deg, #8849b4 0%, #735acd 50%, #5d6ae5 100%);
@@ -35,6 +38,7 @@
   --radius-field: 16px; /* form fields */
   --radius-button: 20px;
   --radius-card: 28px;
+  --radius-modal: 32px;
   --radius-chip: 10px;
 
   --nav-width: 77px;

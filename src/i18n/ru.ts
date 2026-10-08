@@ -1,6 +1,12 @@
 export const ru = {
   nav: {
     chats: 'Чаты',
+    signOut: 'Выйти',
+  },
+  signOutDialog: {
+    title: 'Выйти?',
+    cancel: 'Нет',
+    confirm: 'Да',
   },
   auth: {
     title: 'Вход в GREEN-API',

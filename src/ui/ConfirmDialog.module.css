@@ -1,0 +1,39 @@
+/* web.max.ru "Sign out of profile?" modal */
+.dialog {
+  width: calc(100% - 32px);
+  max-width: 400px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-modal);
+  background: var(--bg-panel);
+  color: var(--text);
+}
+
+.dialog::backdrop {
+  background: var(--bg-backdrop);
+}
+
+/* Padding lives here, so clicks on it don't count as backdrop clicks */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 24px;
+}
+
+.title {
+  padding: 0 24px;
+  font-size: 24px;
+  line-height: 28px;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  gap: 16px;
+  padding: 8px 24px 24px;
+}
+
+.actions > * {
+  flex: 1;
+}
