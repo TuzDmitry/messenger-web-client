@@ -3,6 +3,7 @@ import { signOut } from '@/features/auth/signOut';
 import { ChatList } from '@/features/chats/ChatList';
 import { NewChatDialog } from '@/features/chats/NewChatDialog';
 import { ChatView } from '@/features/messages/ChatView';
+import { StandbyBanner } from '@/features/polling/StandbyBanner';
 import { usePoller } from '@/features/polling/usePoller';
 import { ConfirmDialog } from '@/ui/ConfirmDialog';
 import { ChatsIcon, LogoutIcon, PlusIcon } from '@/ui/icons';
@@ -78,6 +79,7 @@ export function AppLayout() {
       </aside>
 
       <main className={styles.feed}>
+        <StandbyBanner />
         <ChatView />
       </main>
 

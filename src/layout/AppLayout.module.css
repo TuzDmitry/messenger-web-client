@@ -107,6 +107,7 @@ button.navItem:focus-visible {
 
 .feed {
   display: flex;
+  flex-direction: column;
   min-width: 0;
   min-height: 0;
   background: var(--feed-pattern) var(--bg-feed);

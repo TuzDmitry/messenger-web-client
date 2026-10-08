@@ -1,0 +1,19 @@
+/* In the style of the feed's day chip: a translucent strip above the messages */
+.banner {
+  display: flex;
+  flex-shrink: 0;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--divider);
+  background: var(--bg-day-chip);
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+}
+
+.text {
+  min-width: 0;
+}
