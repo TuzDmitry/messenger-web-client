@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import type { MessageNotification } from '@/api/notifications';
+import { createLocalId } from '@/lib/localId';
 
 export type MessageStatus = 'pending' | 'sent' | 'failed';
 
@@ -107,7 +108,7 @@ export const useChats = create<ChatsState>()(
 
       addOutgoing: (chatId, text) => {
         const message: Message = {
-          id: `local-${crypto.randomUUID()}`,
+          id: createLocalId(),
           chatId,
           text,
           direction: 'out',
