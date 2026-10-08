@@ -4,7 +4,7 @@ import { ChatList } from '@/features/chats/ChatList';
 import { NewChatDialog } from '@/features/chats/NewChatDialog';
 import { ChatView } from '@/features/messages/ChatView';
 import { QueueBusyBanner } from '@/features/polling/QueueBusyBanner';
-import { StandbyBanner } from '@/features/polling/StandbyBanner';
+import { StandbyOverlay } from '@/features/polling/StandbyOverlay';
 import { usePoller } from '@/features/polling/usePoller';
 import { NotificationsBanner } from '@/features/settings/NotificationsBanner';
 import { ConfirmDialog } from '@/ui/ConfirmDialog';
@@ -16,6 +16,7 @@ import styles from './AppLayout.module.css';
 export function AppLayout() {
   usePoller();
   const reconnecting = useConnection((state) => state.status === 'reconnecting');
+  const standby = useConnection((state) => state.role === 'standby');
   const [confirmingSignOut, setConfirmingSignOut] = useState(false);
   const [creatingChat, setCreatingChat] = useState(false);
 
@@ -36,71 +37,77 @@ export function AppLayout() {
   }
 
   return (
-    <div className={styles.layout}>
-      <nav className={styles.nav}>
-        <div
-          className={`${styles.navItem} ${styles.navItemActive}`}
-          aria-current="page"
-        >
-          <ChatsIcon />
-          {t.nav.chats}
-        </div>
-
-        <button
-          type="button"
-          className={`${styles.navItem} ${styles.navBottom}`}
-          onClick={openSignOutDialog}
-        >
-          <LogoutIcon />
-          {t.nav.signOut}
-        </button>
-      </nav>
-
-      <aside className={styles.sidebar}>
-        <header className={styles.sidebarHeader}>
-          <div className={styles.sidebarHeading}>
-            <h1 className={styles.sidebarTitle}>{t.chats.title}</h1>
-            <p
-              className={styles.connection}
-              role="status"
-            >
-              {reconnecting && t.connection.reconnecting}
-            </p>
+    <>
+      {/* While another tab is active, the app is visible but inert: no clicks, focus or screen reader */}
+      <div
+        className={styles.layout}
+        inert={standby}
+      >
+        <nav className={styles.nav}>
+          <div
+            className={`${styles.navItem} ${styles.navItemActive}`}
+            aria-current="page"
+          >
+            <ChatsIcon />
+            {t.nav.chats}
           </div>
+
           <button
             type="button"
-            className={styles.newChatButton}
-            aria-label={t.newChat.open}
-            title={t.newChat.open}
-            onClick={openNewChatDialog}
+            className={`${styles.navItem} ${styles.navBottom}`}
+            onClick={openSignOutDialog}
           >
-            <PlusIcon />
+            <LogoutIcon />
+            {t.nav.signOut}
           </button>
-        </header>
-        <ChatList />
-      </aside>
+        </nav>
 
-      <main className={styles.feed}>
-        <NotificationsBanner />
-        <StandbyBanner />
-        <QueueBusyBanner />
-        <ChatView />
-      </main>
+        <aside className={styles.sidebar}>
+          <header className={styles.sidebarHeader}>
+            <div className={styles.sidebarHeading}>
+              <h1 className={styles.sidebarTitle}>{t.chats.title}</h1>
+              <p
+                className={styles.connection}
+                role="status"
+              >
+                {reconnecting && t.connection.reconnecting}
+              </p>
+            </div>
+            <button
+              type="button"
+              className={styles.newChatButton}
+              aria-label={t.newChat.open}
+              title={t.newChat.open}
+              onClick={openNewChatDialog}
+            >
+              <PlusIcon />
+            </button>
+          </header>
+          <ChatList />
+        </aside>
 
-      <NewChatDialog
-        open={creatingChat}
-        onClose={closeNewChatDialog}
-      />
+        <main className={styles.feed}>
+          <NotificationsBanner />
+          <QueueBusyBanner />
+          <ChatView />
+        </main>
 
-      <ConfirmDialog
-        open={confirmingSignOut}
-        title={t.signOutDialog.title}
-        description={t.signOutDialog.description}
-        confirmLabel={t.signOutDialog.confirm}
-        cancelLabel={t.signOutDialog.cancel}
-        onConfirm={signOut}
-        onCancel={closeSignOutDialog}
-      />
-    </div>
+        <NewChatDialog
+          open={creatingChat}
+          onClose={closeNewChatDialog}
+        />
+
+        <ConfirmDialog
+          open={confirmingSignOut}
+          title={t.signOutDialog.title}
+          description={t.signOutDialog.description}
+          confirmLabel={t.signOutDialog.confirm}
+          cancelLabel={t.signOutDialog.cancel}
+          onConfirm={signOut}
+          onCancel={closeSignOutDialog}
+        />
+      </div>
+      {standby && <StandbyOverlay />}
+    </>
   );
 }

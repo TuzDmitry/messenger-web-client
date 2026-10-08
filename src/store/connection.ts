@@ -17,16 +17,21 @@ type ConnectionState = {
   role: PollerRole;
   /** Another client keeps answering the same queue: some messages may go there instead. */
   queueBusy: boolean;
+  /** Set while a poller runs: makes this tab the active one ("use here"). */
+  takeOver: (() => void) | null;
   setStatus: (status: ConnectionStatus) => void;
   setRole: (role: PollerRole) => void;
   setQueueBusy: (queueBusy: boolean) => void;
+  setTakeOver: (takeOver: (() => void) | null) => void;
 };
 
 export const useConnection = create<ConnectionState>()((set) => ({
   status: 'online',
   role: 'unknown',
   queueBusy: false,
+  takeOver: null,
   setStatus: (status) => set({ status }),
   setRole: (role) => set({ role }),
   setQueueBusy: (queueBusy) => set({ queueBusy }),
+  setTakeOver: (takeOver) => set({ takeOver }),
 }));

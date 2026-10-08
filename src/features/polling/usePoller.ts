@@ -4,7 +4,7 @@ import { useConnection } from '@/store/connection';
 import { useSession } from '@/store/session';
 import { t } from '@/i18n';
 import { runPoller } from './poller';
-import { runInSingleTab } from './singleTab';
+import { startSingleTab } from './singleTab';
 
 function handleUnauthorized() {
   signOut(t.auth.errors.sessionExpired);
@@ -20,23 +20,18 @@ export function usePoller() {
   useEffect(() => {
     if (!credentials) return;
     const creds = credentials;
-    const controller = new AbortController();
-    const { setRole, setStatus, setQueueBusy } = useConnection.getState();
+    const { setRole, setStatus, setQueueBusy, setTakeOver } = useConnection.getState();
 
-    function poll() {
-      return runPoller(creds, {
-        signal: controller.signal,
-        onUnauthorized: handleUnauthorized,
-      });
+    function poll(signal: AbortSignal) {
+      return runPoller(creds, { signal, onUnauthorized: handleUnauthorized });
     }
 
-    void runInSingleTab(`poller:${creds.idInstance}`, poll, {
-      signal: controller.signal,
-      onRole: setRole,
-    });
+    const tab = startSingleTab(`poller:${creds.idInstance}`, poll, { onRole: setRole });
+    setTakeOver(tab.takeOver);
 
     return () => {
-      controller.abort();
+      tab.stop();
+      setTakeOver(null);
       setStatus('online');
       setRole('unknown');
       setQueueBusy(false);
