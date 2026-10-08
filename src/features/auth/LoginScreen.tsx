@@ -17,7 +17,9 @@ export function LoginScreen() {
     apiUrl: '',
   });
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<Field, string>>>({});
-  const [formError, setFormError] = useState<string>();
+  // A notice from the last sign out (e.g. the token stopped working) is shown as the form error
+  const notice = useSession((state) => state.notice);
+  const [formError, setFormError] = useState<string | undefined>(notice ?? undefined);
   const [submitting, setSubmitting] = useState(false);
   const [advancedOpen, setAdvancedOpen] = useState(false);
   const advancedId = useId();

@@ -24,6 +24,7 @@ export const ru = {
       required: 'Заполните поле',
       idInstance: 'Только цифры',
       apiUrl: 'Некорректный адрес',
+      sessionExpired: 'Токен инстанса больше не действует. Войдите снова',
       wrongCredentials: 'Неверный idInstance или apiTokenInstance',
       network: 'Нет соединения с сервером. Проверьте интернет и apiUrl',
       http: (status: number) => `Сервер ответил ошибкой (HTTP ${status}). Попробуйте позже`,
@@ -43,6 +44,9 @@ export const ru = {
         }
       },
     },
+  },
+  connection: {
+    reconnecting: 'Подключение…',
   },
   chats: {
     title: 'Чаты',

@@ -85,6 +85,20 @@ button.navItem:focus-visible {
   outline-offset: 2px;
 }
 
+.sidebarHeading {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  min-width: 0;
+}
+
+/* Telegram-style "Connecting…" next to the title; empty while online */
+.connection {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--text-secondary);
+}
+
 .sidebarTitle {
   font-size: 24px;
   line-height: 28px;

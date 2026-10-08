@@ -21,3 +21,17 @@ describe('signOut', () => {
     expect(sessionStorage.getItem('chats')).toBeNull();
   });
 });
+
+describe('signOut with a notice', () => {
+  it('keeps the reason for the login screen, and signing in clears it', () => {
+    signOut('Токен больше не действует');
+    expect(useSession.getState().notice).toBe('Токен больше не действует');
+
+    useSession.getState().signIn({
+      apiUrl: 'https://api.green-api.com',
+      idInstance: '4100000000',
+      apiTokenInstance: 'token',
+    });
+    expect(useSession.getState().notice).toBeNull();
+  });
+});
