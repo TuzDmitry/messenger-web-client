@@ -1,21 +1,24 @@
-import { useId, type InputHTMLAttributes } from 'react'
-import styles from './TextField.module.css'
+import { useId, type InputHTMLAttributes } from 'react';
+import styles from './TextField.module.css';
 
 type TextFieldProps = InputHTMLAttributes<HTMLInputElement> & {
-  label: string
+  label: string;
   /** One line: it shares the reserved message slot with the error. */
-  hint?: string
-  error?: string
-}
+  hint?: string;
+  error?: string;
+};
 
 export function TextField({ label, hint, error, ...inputProps }: TextFieldProps) {
-  const id = useId()
-  const messageId = `${id}-message`
-  const message = error ?? hint
+  const id = useId();
+  const messageId = `${id}-message`;
+  const message = error ?? hint;
 
   return (
     <div className={styles.field}>
-      <label className={styles.label} htmlFor={id}>
+      <label
+        className={styles.label}
+        htmlFor={id}
+      >
         {label}
       </label>
       <input
@@ -26,9 +29,12 @@ export function TextField({ label, hint, error, ...inputProps }: TextFieldProps)
         {...inputProps}
       />
       {/* Always rendered: the slot keeps its height so errors don't shift the layout */}
-      <p id={messageId} className={error ? styles.error : styles.hint}>
+      <p
+        id={messageId}
+        className={error ? styles.error : styles.hint}
+      >
         {message}
       </p>
     </div>
-  )
+  );
 }

@@ -1,12 +1,15 @@
-import { t } from '@/i18n'
-import { ChatsIcon } from '@/ui/icons'
-import styles from './AppLayout.module.css'
+import { ChatsIcon } from '@/ui/icons';
+import { t } from '@/i18n';
+import styles from './AppLayout.module.css';
 
 export function AppLayout() {
   return (
     <div className={styles.layout}>
       <nav className={styles.nav}>
-        <div className={`${styles.navItem} ${styles.navItemActive}`} aria-current="page">
+        <div
+          className={`${styles.navItem} ${styles.navItemActive}`}
+          aria-current="page"
+        >
           <ChatsIcon />
           {t.nav.chats}
         </div>
@@ -25,5 +28,5 @@ export function AppLayout() {
         </p>
       </main>
     </div>
-  )
+  );
 }

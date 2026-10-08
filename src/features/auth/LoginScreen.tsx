@@ -1,68 +1,76 @@
-import { useId, useState, type FormEvent } from 'react'
-import { t } from '@/i18n'
-import { useSession } from '@/store/session'
-import { Button } from '@/ui/Button'
-import { TextField } from '@/ui/TextField'
-import { credentialsSchema, DEFAULT_API_URL } from './credentialsSchema'
-import styles from './LoginScreen.module.css'
-import { verifyCredentials } from './verifyCredentials'
+import { useId, useState, type FormEvent } from 'react';
+import { Button } from '@/ui/Button';
+import { TextField } from '@/ui/TextField';
+import { useSession } from '@/store/session';
+import { t } from '@/i18n';
+import { credentialsSchema, DEFAULT_API_URL } from './credentialsSchema';
+import { verifyCredentials } from './verifyCredentials';
+import styles from './LoginScreen.module.css';
 
-type Field = 'idInstance' | 'apiTokenInstance' | 'apiUrl'
+type Field = 'idInstance' | 'apiTokenInstance' | 'apiUrl';
 
 export function LoginScreen() {
-  const signIn = useSession((state) => state.signIn)
+  const signIn = useSession((state) => state.signIn);
   const [values, setValues] = useState<Record<Field, string>>({
     idInstance: '',
     apiTokenInstance: '',
     apiUrl: '',
-  })
-  const [fieldErrors, setFieldErrors] = useState<Partial<Record<Field, string>>>({})
-  const [formError, setFormError] = useState<string>()
-  const [submitting, setSubmitting] = useState(false)
-  const [advancedOpen, setAdvancedOpen] = useState(false)
-  const advancedId = useId()
+  });
+  const [fieldErrors, setFieldErrors] = useState<Partial<Record<Field, string>>>({});
+  const [formError, setFormError] = useState<string>();
+  const [submitting, setSubmitting] = useState(false);
+  const [advancedOpen, setAdvancedOpen] = useState(false);
+  const advancedId = useId();
 
   // apiUrl is optional (empty → default host), so only these two gate the button
-  const canSubmit = values.idInstance.trim() !== '' && values.apiTokenInstance.trim() !== ''
+  const canSubmit = values.idInstance.trim() !== '' && values.apiTokenInstance.trim() !== '';
 
   const bind = (field: Field) => ({
     name: field,
     value: values[field],
     error: fieldErrors[field],
     onChange: (event: { target: { value: string } }) => {
-      setValues((prev) => ({ ...prev, [field]: event.target.value }))
-      setFieldErrors((prev) => ({ ...prev, [field]: undefined }))
-      setFormError(undefined)
+      setValues((prev) => ({ ...prev, [field]: event.target.value }));
+      setFieldErrors((prev) => ({ ...prev, [field]: undefined }));
+      setFormError(undefined);
     },
-  })
+  });
 
   async function handleSubmit(event: FormEvent) {
-    event.preventDefault()
-    if (!canSubmit || submitting) return
-    const parsed = credentialsSchema.safeParse(values)
+    event.preventDefault();
+    if (!canSubmit || submitting) return;
+    const parsed = credentialsSchema.safeParse(values);
     if (!parsed.success) {
-      const errors: Partial<Record<Field, string>> = {}
-      for (const issue of parsed.error.issues) errors[issue.path[0] as Field] ??= issue.message
-      setFieldErrors(errors)
-      if (errors.apiUrl) setAdvancedOpen(true)
-      return
+      const errors: Partial<Record<Field, string>> = {};
+      for (const issue of parsed.error.issues) errors[issue.path[0] as Field] ??= issue.message;
+      setFieldErrors(errors);
+      if (errors.apiUrl) setAdvancedOpen(true);
+      return;
     }
 
-    setSubmitting(true)
-    const result = await verifyCredentials(parsed.data)
-    setSubmitting(false)
+    setSubmitting(true);
+    const result = await verifyCredentials(parsed.data);
+    setSubmitting(false);
 
-    if (result.ok) signIn(parsed.data)
-    else setFormError(result.error)
+    if (result.ok) signIn(parsed.data);
+    else setFormError(result.error);
   }
 
   return (
     <main className={styles.screen}>
-      <form className={styles.card} onSubmit={handleSubmit} noValidate aria-busy={submitting}>
+      <form
+        className={styles.card}
+        onSubmit={handleSubmit}
+        noValidate
+        aria-busy={submitting}
+      >
         <h1 className={styles.title}>{t.auth.title}</h1>
 
         {/* A disabled fieldset disables every control inside it, including the submit button */}
-        <fieldset className={styles.fields} disabled={submitting}>
+        <fieldset
+          className={styles.fields}
+          disabled={submitting}
+        >
           <TextField
             label={t.auth.idInstance}
             inputMode="numeric"
@@ -91,7 +99,11 @@ export function LoginScreen() {
             >
               {t.auth.advanced}
             </button>
-            <div id={advancedId} className={styles.advancedBody} data-open={advancedOpen}>
+            <div
+              id={advancedId}
+              className={styles.advancedBody}
+              data-open={advancedOpen}
+            >
               <TextField
                 label={t.auth.apiUrl}
                 type="url"
@@ -104,22 +116,32 @@ export function LoginScreen() {
 
           {/* Always rendered: reserves two lines, and a live region that already exists
               announces new errors more reliably than one inserted with the text */}
-          <p className={styles.formError} role="alert">
+          <p
+            className={styles.formError}
+            role="alert"
+          >
             {formError}
           </p>
 
-          <Button type="submit" disabled={!canSubmit}>
+          <Button
+            type="submit"
+            disabled={!canSubmit}
+          >
             {submitting ? t.auth.submitting : t.auth.submit}
           </Button>
         </fieldset>
 
         <p className={styles.footer}>
           {t.auth.subtitle}.{' '}
-          <a href="https://console.green-api.com" target="_blank" rel="noreferrer">
+          <a
+            href="https://console.green-api.com"
+            target="_blank"
+            rel="noreferrer"
+          >
             {t.auth.consoleLink}
           </a>
         </p>
       </form>
     </main>
-  )
+  );
 }

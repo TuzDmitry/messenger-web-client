@@ -1,7 +1,7 @@
-import { z } from 'zod'
-import { t } from '@/i18n'
+import { z } from 'zod';
+import { t } from '@/i18n';
 
-export const DEFAULT_API_URL = 'https://api.green-api.com'
+export const DEFAULT_API_URL = 'https://api.green-api.com';
 
 export const credentialsSchema = z.object({
   idInstance: z
@@ -17,4 +17,4 @@ export const credentialsSchema = z.object({
     .transform((url) => url || DEFAULT_API_URL)
     .pipe(z.url({ protocol: /^https?$/, error: t.auth.errors.apiUrl }))
     .transform((url) => url.replace(/\/+$/, '')),
-})
+});

@@ -1,6 +1,6 @@
-import type { SVGProps } from 'react'
+import type { SVGProps } from 'react';
 
-type IconProps = SVGProps<SVGSVGElement>
+type IconProps = SVGProps<SVGSVGElement>;
 
 const base = {
   width: 24,
@@ -12,12 +12,15 @@ const base = {
   strokeLinecap: 'round',
   strokeLinejoin: 'round',
   'aria-hidden': true,
-} as const
+} as const;
 
 export function ChatsIcon(props: IconProps) {
   return (
-    <svg {...base} {...props}>
+    <svg
+      {...base}
+      {...props}
+    >
       <path d="M4 5h16v11H9l-5 4z" />
     </svg>
-  )
+  );
 }

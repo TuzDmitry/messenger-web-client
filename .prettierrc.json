@@ -1,6 +1,25 @@
 {
-  "semi": false,
+  "semi": true,
   "singleQuote": true,
   "trailingComma": "all",
-  "printWidth": 100
+  "printWidth": 100,
+  "singleAttributePerLine": true,
+  "bracketSameLine": false,
+  "plugins": ["@ianvs/prettier-plugin-sort-imports"],
+  "importOrder": [
+    "^react$",
+    "^react/(.*)$",
+    "<THIRD_PARTY_MODULES>",
+    "^@/features/(.*)$",
+    "^@/layout/(.*)$",
+    "^@/ui/(.*)$",
+    "^@/store/(.*)$",
+    "^@/api/(.*)$",
+    "^@/lib/(.*)$",
+    "^@/i18n(/.*)?$",
+    "^@/(.*)$",
+    "^[.](?!.*\\.css$).*$",
+    "\\.css$"
+  ],
+  "importOrderTypeScriptVersion": "5.0.0"
 }
