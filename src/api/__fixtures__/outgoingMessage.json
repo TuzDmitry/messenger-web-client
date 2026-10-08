@@ -1,0 +1,31 @@
+{
+  "receiptId": 1,
+  "body": {
+    "typeWebhook": "outgoingMessageReceived",
+    "instanceData": {
+      "idInstance": 4100000000,
+      "wid": "79990000000@c.us",
+      "typeInstance": "telegram"
+    },
+    "timestamp": 1791473613,
+    "idMessage": "1791473613462",
+    "senderData": {
+      "chatId": "10000000",
+      "chatType": "user",
+      "sender": "20000000",
+      "chatName": "Иван",
+      "senderName": "Тестовый аккаунт",
+      "senderType": "user",
+      "senderContactName": "",
+      "senderPhoneNumber": 79990000000
+    },
+    "messageData": {
+      "typeMessage": "textMessage",
+      "textMessageData": {
+        "textMessage": "Ответ с запасной аккаунта на основной",
+        "forwardingScore": 0,
+        "isForwarded": false
+      }
+    }
+  }
+}

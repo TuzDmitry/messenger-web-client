@@ -25,7 +25,14 @@ export class ApiError extends Error {
   readonly method: string
 
   constructor(method: string, status: number, body: unknown, options?: ErrorOptions) {
-    super(status === 0 ? `${method}: network error` : `${method}: HTTP ${status}`, options)
+    const reason =
+      typeof body === 'object' &&
+      body !== null &&
+      'reason' in body &&
+      typeof body.reason === 'string'
+        ? ` (${body.reason})`
+        : ''
+    super(status === 0 ? `${method}: network error` : `${method}: HTTP ${status}${reason}`, options)
     this.name = 'ApiError'
     this.method = method
     this.status = status
