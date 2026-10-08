@@ -1,0 +1,40 @@
+/* web.max.ru message bubble */
+.bubble {
+  position: relative;
+  max-width: min(560px, 75%);
+  padding: 8px 10px 10px;
+  font-size: 16px;
+  line-height: 20px;
+  overflow-wrap: anywhere;
+}
+
+.in {
+  border-radius: var(--radius-bubble) var(--radius-bubble) var(--radius-bubble)
+    var(--radius-bubble-tail);
+  background: var(--bubble-in);
+}
+
+.out {
+  margin-left: auto;
+  border-radius: var(--radius-bubble) var(--radius-bubble) var(--radius-bubble-tail)
+    var(--radius-bubble);
+  background: var(--bubble-out);
+}
+
+.text {
+  white-space: pre-wrap;
+}
+
+.spacer {
+  display: inline-block;
+  width: 44px;
+}
+
+.time {
+  position: absolute;
+  right: 10px;
+  bottom: 6px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-secondary);
+}

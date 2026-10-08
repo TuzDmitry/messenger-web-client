@@ -70,6 +70,10 @@ export const ru = {
     },
   },
   feed: {
+    today: 'Сегодня',
+    yesterday: 'Вчера',
+    empty: 'Сообщений пока нет',
+    messages: 'Сообщения',
     noChatSelected: 'Выберите чат, чтобы начать общение',
   },
 } as const;

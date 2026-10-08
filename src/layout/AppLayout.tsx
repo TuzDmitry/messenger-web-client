@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { signOut } from '@/features/auth/signOut';
 import { ChatList } from '@/features/chats/ChatList';
 import { NewChatDialog } from '@/features/chats/NewChatDialog';
+import { ChatView } from '@/features/messages/ChatView';
 import { ConfirmDialog } from '@/ui/ConfirmDialog';
 import { ChatsIcon, LogoutIcon, PlusIcon } from '@/ui/icons';
 import { t } from '@/i18n';
@@ -65,9 +66,7 @@ export function AppLayout() {
       </aside>
 
       <main className={styles.feed}>
-        <p className={styles.placeholder}>
-          <span className={styles.chip}>{t.feed.noChatSelected}</span>
-        </p>
+        <ChatView />
       </main>
 
       <NewChatDialog

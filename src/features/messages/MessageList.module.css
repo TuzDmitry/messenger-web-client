@@ -1,0 +1,43 @@
+.scroller {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 100%;
+  margin: 0;
+  /* Messages sit at the bottom while there are few of them */
+  padding: 16px 16px 24px;
+  list-style: none;
+  justify-content: flex-end;
+}
+
+.item {
+  display: flex;
+}
+
+.day {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0;
+}
+
+.empty {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+/* web.max.ru day chip */
+.chip {
+  padding: 1px 6px;
+  border-radius: var(--radius-chip);
+  background: var(--bg-day-chip);
+  font-size: 14px;
+  line-height: 18px;
+}

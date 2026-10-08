@@ -7,6 +7,8 @@ type AvatarProps = {
   name: string;
   /** Stable value the color is derived from, e.g. chatId. */
   seed: string;
+  /** regular: 56px (chat list), small: 40px (chat header) */
+  size?: 'regular' | 'small';
 };
 
 function initials(name: string): string {
@@ -26,12 +28,12 @@ function colorIndex(seed: string): number {
 }
 
 /** Initials on a color picked from the seed; a person icon when the name has no letters (a phone). */
-export function Avatar({ name, seed }: AvatarProps) {
+export function Avatar({ name, seed, size = 'regular' }: AvatarProps) {
   const letters = initials(name);
 
   return (
     <span
-      className={`${styles.avatar} ${styles[`color${colorIndex(seed)}`]}`}
+      className={`${styles.avatar} ${styles[size]} ${styles[`color${colorIndex(seed)}`]}`}
       aria-hidden
     >
       {letters || <PersonIcon />}
