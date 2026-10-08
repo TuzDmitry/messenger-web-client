@@ -21,7 +21,7 @@ export function usePoller() {
     if (!credentials) return;
     const creds = credentials;
     const controller = new AbortController();
-    const { setRole, setStatus } = useConnection.getState();
+    const { setRole, setStatus, setQueueBusy } = useConnection.getState();
 
     function poll() {
       return runPoller(creds, {
@@ -39,6 +39,7 @@ export function usePoller() {
       controller.abort();
       setStatus('online');
       setRole('unknown');
+      setQueueBusy(false);
     };
   }, [credentials]);
 }

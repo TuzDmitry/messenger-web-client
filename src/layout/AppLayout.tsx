@@ -3,6 +3,7 @@ import { signOut } from '@/features/auth/signOut';
 import { ChatList } from '@/features/chats/ChatList';
 import { NewChatDialog } from '@/features/chats/NewChatDialog';
 import { ChatView } from '@/features/messages/ChatView';
+import { QueueBusyBanner } from '@/features/polling/QueueBusyBanner';
 import { StandbyBanner } from '@/features/polling/StandbyBanner';
 import { usePoller } from '@/features/polling/usePoller';
 import { NotificationsBanner } from '@/features/settings/NotificationsBanner';
@@ -82,6 +83,7 @@ export function AppLayout() {
       <main className={styles.feed}>
         <NotificationsBanner />
         <StandbyBanner />
+        <QueueBusyBanner />
         <ChatView />
       </main>
 

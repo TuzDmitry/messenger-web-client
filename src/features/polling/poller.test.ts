@@ -52,6 +52,7 @@ describe('runPoller', () => {
     vi.useFakeTimers();
     useChats.getState().reset();
     useConnection.getState().setStatus('online');
+    useConnection.getState().setQueueBusy(false);
   });
 
   afterEach(() => {
@@ -112,7 +113,10 @@ describe('runPoller', () => {
 
   it('backs off after failures and reports reconnecting, then online again', async () => {
     const statuses: string[] = [];
-    const unsubscribe = useConnection.subscribe((state) => statuses.push(state.status));
+    // Only changes: other connection fields (queueBusy) notify subscribers too
+    const unsubscribe = useConnection.subscribe((state, prev) => {
+      if (state.status !== prev.status) statuses.push(state.status);
+    });
 
     await poll([
       new TypeError('Failed to fetch'),
@@ -121,7 +125,37 @@ describe('runPoller', () => {
     ]);
     unsubscribe();
 
-    expect(statuses).toEqual(['reconnecting', 'reconnecting', 'online']);
+    expect(statuses).toEqual(['reconnecting', 'online']);
+  });
+
+  it('treats 408 (another long poll is open) as an empty queue, not a failure', async () => {
+    const statuses: string[] = [];
+    // Only changes: other connection fields (queueBusy) notify subscribers too
+    const unsubscribe = useConnection.subscribe((state, prev) => {
+      if (state.status !== prev.status) statuses.push(state.status);
+    });
+
+    const { requests } = await poll([{ body: '', status: 408 }, { body: null }]);
+    unsubscribe();
+
+    expect(statuses).not.toContain('reconnecting');
+    expect(requests).toEqual([receive, receive, receive]);
+  });
+
+  it('reports a busy queue after several 408s in a row, and clears it on the next 200', async () => {
+    const busy: boolean[] = [];
+    const unsubscribe = useConnection.subscribe((state) => busy.push(state.queueBusy));
+
+    await poll([
+      { body: '', status: 408 },
+      { body: '', status: 408 },
+      { body: '', status: 408 },
+      { body: null },
+    ]);
+    unsubscribe();
+
+    expect(busy).toContain(true);
+    expect(useConnection.getState().queueBusy).toBe(false);
   });
 
   it('stops and reports when the token is rejected', async () => {

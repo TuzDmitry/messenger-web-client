@@ -9,6 +9,14 @@ export const RECEIVE_TIMEOUT_S = 20;
 // A request that outlives the long-poll window by this much is considered hung
 const REQUEST_TIMEOUT_MS = (RECEIVE_TIMEOUT_S + 10) * 1000;
 const BACKOFF_MAX_MS = 30_000;
+/**
+ * GREEN-API serves one long poll per instance at a time: a concurrent one gets 408 after
+ * timeout + 5 s. A request we aborted (sign out, lock handover) still counts until it
+ * expires, so a single 408 is normal; several in a row mean another client reads the queue.
+ */
+const QUEUE_BUSY_AFTER = 3;
+// 408 normally takes 25 s; this only guards against a hot loop if it ever came instantly
+const MIN_GAP_AFTER_BUSY_MS = 1000;
 
 /** 1s, 2s, 4s … capped at 30s. */
 export function backoffDelay(failures: number): number {
@@ -48,15 +56,18 @@ type PollerOptions = {
  * Runs until `signal` aborts or the credentials are rejected.
  */
 export async function runPoller(creds: Credentials, { signal, onUnauthorized }: PollerOptions) {
-  const { setStatus } = useConnection.getState();
+  const { setStatus, setQueueBusy } = useConnection.getState();
   let failures = 0;
+  let busy = 0;
 
   while (!signal.aborted) {
     try {
       const requestSignal = AbortSignal.any([signal, AbortSignal.timeout(REQUEST_TIMEOUT_MS)]);
       const envelope = await receiveNotification(creds, RECEIVE_TIMEOUT_S, requestSignal);
       failures = 0;
+      busy = 0;
       setStatus('online');
+      setQueueBusy(false);
       if (!envelope) continue;
 
       handleBody(envelope.body);
@@ -64,6 +75,15 @@ export async function runPoller(creds: Credentials, { signal, onUnauthorized }: 
       await deleteNotification(creds, envelope.receiptId, signal);
     } catch (error) {
       if (signal.aborted) return;
+      // Not a failure: the queue is just being listened to by someone else right now
+      if (error instanceof ApiError && error.status === 408) {
+        failures = 0;
+        busy += 1;
+        setStatus('online');
+        if (busy >= QUEUE_BUSY_AFTER) setQueueBusy(true);
+        await sleep(MIN_GAP_AFTER_BUSY_MS, signal);
+        continue;
+      }
       if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
         onUnauthorized();
 
