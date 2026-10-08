@@ -5,6 +5,9 @@ import { t } from '@/i18n';
 import { MAX_MESSAGE_LENGTH, sendText } from './sendText';
 import styles from './Composer.module.css';
 
+// On touch screens autofocus would pop the keyboard up over half the chat on every open
+const AUTOFOCUS = globalThis.matchMedia?.('(pointer: fine)').matches ?? false;
+
 // Show the counter only when it starts to matter
 const COUNTER_FROM = MAX_MESSAGE_LENGTH - 200;
 
@@ -56,7 +59,7 @@ export function Composer({ chatId }: ComposerProps) {
           aria-label={t.composer.placeholder}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
-          autoFocus
+          autoFocus={AUTOFOCUS}
         />
         {text.length >= COUNTER_FROM && (
           <span

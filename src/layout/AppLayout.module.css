@@ -1,7 +1,8 @@
 .layout {
   display: grid;
   grid-template-columns: var(--nav-width) var(--sidebar-width) 1fr;
-  height: 100%;
+  /* dvh: on phones the visible height shrinks when the browser bars or keyboard show up */
+  height: 100dvh;
 }
 
 .nav {
@@ -111,4 +112,50 @@ button.navItem:focus-visible {
   min-width: 0;
   min-height: 0;
   background: var(--feed-pattern) var(--bg-feed);
+}
+
+/* Phone: one column — the chat list, or the open chat; the nav rail becomes a bottom bar */
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+  }
+
+  .nav {
+    flex-direction: row;
+    justify-content: space-around;
+    grid-row: 2;
+    padding: 4px 8px calc(4px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--divider);
+    border-right: none;
+  }
+
+  .navItem {
+    width: auto;
+    min-width: 72px;
+  }
+
+  .navBottom {
+    margin-top: 0;
+  }
+
+  .sidebar {
+    grid-row: 1;
+    min-height: 0;
+    border-right: none;
+  }
+
+  .feed {
+    grid-row: 1;
+  }
+
+  .layout[data-view='list'] .feed,
+  .layout[data-view='chat'] .sidebar,
+  .layout[data-view='chat'] .nav {
+    display: none;
+  }
+
+  .layout[data-view='chat'] {
+    grid-template-rows: 1fr;
+  }
 }

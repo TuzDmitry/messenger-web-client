@@ -9,6 +9,7 @@ import { usePoller } from '@/features/polling/usePoller';
 import { NotificationsBanner } from '@/features/settings/NotificationsBanner';
 import { ConfirmDialog } from '@/ui/ConfirmDialog';
 import { ChatsIcon, LogoutIcon, PlusIcon } from '@/ui/icons';
+import { useChats } from '@/store/chats';
 import { useConnection } from '@/store/connection';
 import { t } from '@/i18n';
 import styles from './AppLayout.module.css';
@@ -17,6 +18,8 @@ export function AppLayout() {
   usePoller();
   const reconnecting = useConnection((state) => state.status === 'reconnecting');
   const standby = useConnection((state) => state.role === 'standby');
+  // On a phone only one column fits: the list, or the open chat
+  const view = useChats((state) => (state.activeChatId ? 'chat' : 'list'));
   const [confirmingSignOut, setConfirmingSignOut] = useState(false);
   const [creatingChat, setCreatingChat] = useState(false);
 
@@ -41,6 +44,7 @@ export function AppLayout() {
       {/* While another tab is active, the app is visible but inert: no clicks, focus or screen reader */}
       <div
         className={styles.layout}
+        data-view={view}
         inert={standby}
       >
         <nav className={styles.nav}>

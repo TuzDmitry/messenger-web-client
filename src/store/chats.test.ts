@@ -43,6 +43,16 @@ describe('chats store', () => {
     });
   });
 
+  it('closing a chat goes back to the list, and new messages count as unread again', () => {
+    store().receive(incoming());
+    store().openChat('10000000');
+    store().closeChat();
+    store().receive(incoming({ idMessage: 'm2', timestamp: 2_000 }));
+
+    expect(store().activeChatId).toBeNull();
+    expect(store().chats['10000000']!.unread).toBe(1);
+  });
+
   describe('outgoing messages', () => {
     beforeEach(() => store().addChat({ chatId: '10000000', phone: '79991234567' }));
 

@@ -100,6 +100,7 @@ export const ru = {
     },
   },
   feed: {
+    back: 'К списку чатов',
     today: 'Сегодня',
     yesterday: 'Вчера',
     empty: 'Сообщений пока нет',

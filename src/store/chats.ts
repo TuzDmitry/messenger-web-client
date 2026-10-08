@@ -37,6 +37,8 @@ type ChatsActions = {
   /** Idempotent: an existing chat is returned untouched. */
   addChat: (chat: { chatId: string; phone: string }) => void;
   openChat: (chatId: string) => void;
+  /** Back to the chat list (the only way out of a chat on a phone). */
+  closeChat: () => void;
   /** Optimistic outgoing message; returns its local id. */
   addOutgoing: (chatId: string, text: string) => string;
   markSent: (localId: string, idMessage: string) => void;
@@ -100,6 +102,8 @@ export const useChats = create<ChatsState>()(
             chats: { ...state.chats, [chatId]: { ...chat, unread: 0 } },
           };
         }),
+
+      closeChat: () => set({ activeChatId: null }),
 
       addOutgoing: (chatId, text) => {
         const message: Message = {
