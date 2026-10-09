@@ -18,7 +18,7 @@ type RequestOptions = UrlOptions & {
   signal?: AbortSignal;
 };
 
-/** `0` means the request never got an HTTP response (network failure, CORS, DNS). */
+/** `0` means the request never got an HTTP response (nKetwork failure, CORS, DNS). */
 export class ApiError extends Error {
   readonly status: number;
   readonly body: unknown;
