@@ -17,19 +17,15 @@ export function ChatView() {
     );
   }
 
+  // key: a fresh view per chat — the list starts scrolled to the bottom, drafts don't leak
   return (
-    <div className={styles.view}>
+    <div
+      key={activeChatId}
+      className={styles.view}
+    >
       <ChatHeader chatId={activeChatId} />
-      {/* key: a fresh list per chat, so it starts scrolled to the bottom */}
-      <MessageList
-        key={activeChatId}
-        chatId={activeChatId}
-      />
-      {/* key: drafts don't leak between chats */}
-      <Composer
-        key={activeChatId}
-        chatId={activeChatId}
-      />
+      <MessageList chatId={activeChatId} />
+      <Composer chatId={activeChatId} />
     </div>
   );
 }
