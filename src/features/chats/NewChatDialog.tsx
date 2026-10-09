@@ -3,6 +3,7 @@ import { Button } from '@/ui/Button';
 import { Modal } from '@/ui/Modal';
 import { TextField } from '@/ui/TextField';
 import { useSession } from '@/store/session';
+import { phoneDigits } from '@/lib/recipient';
 import { t } from '@/i18n';
 import { startChat } from './startChat';
 import styles from './NewChatDialog.module.css';
@@ -24,8 +25,17 @@ export function NewChatDialog({ open, onClose }: NewChatDialogProps) {
     onClose();
   }
 
+  // Digits only. When something was dropped, the input is fixed up in place with the caret
+  // where it was: otherwise React would set the value and throw the caret to the end
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    setPhone(event.target.value);
+    const input = event.target;
+    const digits = phoneDigits(input.value);
+    if (digits !== input.value) {
+      const caret = phoneDigits(input.value.slice(0, input.selectionStart ?? undefined)).length;
+      input.value = digits;
+      input.setSelectionRange(caret, caret);
+    }
+    setPhone(digits);
     setError(undefined);
   }
 
@@ -60,8 +70,9 @@ export function NewChatDialog({ open, onClose }: NewChatDialogProps) {
           <TextField
             label={t.newChat.phone}
             type="tel"
-            inputMode="tel"
+            inputMode="numeric"
             autoComplete="off"
+            prefix="+"
             placeholder={t.newChat.placeholder}
             hint={t.newChat.hint}
             error={error}

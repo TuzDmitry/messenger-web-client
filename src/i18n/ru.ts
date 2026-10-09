@@ -72,7 +72,7 @@ export const ru = {
     open: 'Новый чат',
     title: 'Новый чат',
     phone: 'Номер телефона',
-    placeholder: '+7 999 123-45-67',
+    placeholder: '79991234567',
     hint: 'С кодом страны',
     submit: 'Начать чат',
     submitting: 'Ищем…',

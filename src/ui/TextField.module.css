@@ -12,7 +12,14 @@
   color: var(--text-secondary);
 }
 
+.control {
+  position: relative;
+  display: flex;
+}
+
 .input {
+  flex: 1;
+  min-width: 0;
   height: 52px;
   padding: 6px 12px;
   border: 1px solid transparent;
@@ -31,8 +38,24 @@
   border-color: var(--accent);
 }
 
-.input:disabled {
+.input:disabled,
+.input:disabled + .prefix {
   opacity: 0.6;
+}
+
+.input[data-prefixed] {
+  padding-left: 24px;
+}
+
+/* Sits over the input's left padding, looks like the start of the value */
+.prefix {
+  position: absolute;
+  top: 50%;
+  left: 13px;
+  font-size: 15px;
+  line-height: 20px;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .input[aria-invalid='true'] {

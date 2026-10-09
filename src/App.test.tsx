@@ -113,7 +113,10 @@ describe('App', () => {
 
     // New chat by phone
     await user.click(screen.getByRole('button', { name: t.newChat.open }));
-    await user.type(screen.getByLabelText(t.newChat.phone), '+7 999 123-45-67');
+    const phoneField = screen.getByLabelText<HTMLInputElement>(t.newChat.phone);
+    await user.type(phoneField, '+7 999 123-45-67');
+    // The field keeps digits only; the `+` is drawn by the field
+    expect(phoneField.value).toBe('79991234567');
     await user.click(screen.getByRole('button', { name: t.newChat.submit }));
     const composer = await screen.findByRole('textbox', { name: t.composer.placeholder });
     expect(api.calls.find((call) => call.method === 'checkAccount')?.body).toEqual({

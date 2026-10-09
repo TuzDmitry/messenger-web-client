@@ -2,6 +2,11 @@
 const MIN_DIGITS = 10;
 const MAX_DIGITS = 15;
 
+/** What the phone field keeps while typing or pasting: digits only, the `+` is drawn by the field. */
+export function phoneDigits(input: string): string {
+  return input.replace(/\D/g, '');
+}
+
 /**
  * `+375 (29) 123-45-67` → `375291234567`, or `null` when it can't be a phone number.
  * Only the format is checked: which countries a messenger accepts is up to the API.

@@ -1,5 +1,16 @@
 import { describe, expect, it } from 'vitest';
-import { normalizePhone } from './recipient';
+import { normalizePhone, phoneDigits } from './recipient';
+
+describe('phoneDigits', () => {
+  it.each([
+    ['+375 (33) 309-33-31', '375333093331'],
+    ['79991234567', '79991234567'],
+    ['7a9b9', '799'],
+    ['++', ''],
+  ])('%o → %o', (input, expected) => {
+    expect(phoneDigits(input)).toBe(expected);
+  });
+});
 
 describe('normalizePhone', () => {
   it.each([
