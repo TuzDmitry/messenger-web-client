@@ -4,11 +4,11 @@ import { TextField } from '@/ui/TextField';
 import { useSession } from '@/store/session';
 import { t } from '@/i18n';
 import { credentialsSchema, DEFAULT_API_URL } from './credentialsSchema';
-import { clearLoginDraft, readLoginDraft, saveLoginDraft } from './loginDraft';
+import { clearLoginDraft, readLoginDraft, saveLoginDraft, type LoginDraft } from './loginDraft';
 import { verifyCredentials } from './verifyCredentials';
 import styles from './LoginScreen.module.css';
 
-type Field = 'idInstance' | 'apiTokenInstance' | 'apiUrl';
+type Field = keyof LoginDraft;
 
 export function LoginScreen() {
   const signIn = useSession((state) => state.signIn);

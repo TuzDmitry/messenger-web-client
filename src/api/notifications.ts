@@ -1,8 +1,11 @@
 import type { z } from 'zod';
 import { messageNotificationSchema } from './schemas';
 
+/** `in` — from the other party; `out` — ours, sent from this app or from the phone. */
+export type MessageDirection = 'in' | 'out';
+
 export type MessageNotification = {
-  direction: 'in' | 'out';
+  direction: MessageDirection;
   idMessage: string;
   chatId: string;
   /** Name of the other party. For outgoing messages `senderName` is us, so only `chatName` is used. */

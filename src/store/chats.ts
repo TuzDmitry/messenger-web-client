@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import type { MessageNotification } from '@/api/notifications';
+import type { MessageDirection, MessageNotification } from '@/api/notifications';
 import { createLocalId } from '@/lib/localId';
 
 export type MessageStatus = 'pending' | 'sent' | 'failed';
@@ -10,7 +10,7 @@ export type Message = {
   id: string;
   chatId: string;
   text: string;
-  direction: 'in' | 'out';
+  direction: MessageDirection;
   /** Milliseconds. */
   timestamp: number;
   status: MessageStatus;
