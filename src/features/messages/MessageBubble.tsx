@@ -20,6 +20,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
   const credentials = useSession((state) => state.credentials);
   const isOut = message.direction === 'out';
   const StatusIcon = STATUS_ICONS[message.status];
+  const dateTime = new Date(message.timestamp).toISOString();
 
   function handleRetry() {
     if (credentials) void retryMessage(credentials, message.id);
@@ -35,9 +36,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
           aria-hidden
         />
         <span className={styles.meta}>
-          <time dateTime={new Date(message.timestamp).toISOString()}>
-            {formatTime(message.timestamp)}
-          </time>
+          <time dateTime={dateTime}>{formatTime(message.timestamp)}</time>
           {isOut && (
             <StatusIcon
               className={`${styles.status} ${styles[message.status]}`}

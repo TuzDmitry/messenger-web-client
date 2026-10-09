@@ -24,6 +24,7 @@ export function ChatListItem({ chatId }: ChatListItemProps) {
   const phoneLabel = chat.phone && `+${chat.phone}`;
   // Before the first message: the phone, unless it's already the title
   const placeholder = phoneLabel !== chat.title ? phoneLabel : undefined;
+  const lastMessageDateTime = lastMessage && new Date(lastMessage.timestamp).toISOString();
 
   function handleClick() {
     openChat(chatId);
@@ -46,7 +47,7 @@ export function ChatListItem({ chatId }: ChatListItemProps) {
           {lastMessage && (
             <time
               className={styles.time}
-              dateTime={new Date(lastMessage.timestamp).toISOString()}
+              dateTime={lastMessageDateTime}
             >
               {formatChatTime(lastMessage.timestamp)}
             </time>

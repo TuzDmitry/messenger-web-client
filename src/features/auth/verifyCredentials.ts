@@ -1,4 +1,4 @@
-import { ApiError, type Credentials } from '@/api/client';
+import { ApiError, isUnauthorized, type Credentials } from '@/api/client';
 import { getStateInstance } from '@/api/methods';
 import { t } from '@/i18n';
 
@@ -18,7 +18,7 @@ export async function verifyCredentials(creds: Credentials): Promise<VerifyResul
 function describeError(error: unknown): string {
   if (!(error instanceof ApiError)) return t.auth.errors.unexpected;
   if (error.status === 0) return t.auth.errors.network;
-  // A wrong token answers 401; a wrong idInstance can also show up as 403/404
-  if ([401, 403, 404].includes(error.status)) return t.auth.errors.wrongCredentials;
+  // A wrong idInstance can also show up as 404
+  if (isUnauthorized(error) || error.status === 404) return t.auth.errors.wrongCredentials;
   return t.auth.errors.http(error.status);
 }

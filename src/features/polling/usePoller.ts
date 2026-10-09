@@ -19,6 +19,7 @@ export function usePoller() {
 
   useEffect(() => {
     if (!credentials) return;
+
     const creds = credentials;
     const { setRole, setStatus, setQueueBusy, setTakeOver } = useConnection.getState();
 

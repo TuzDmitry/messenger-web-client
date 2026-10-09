@@ -18,6 +18,8 @@ export function NewChatDialog({ open, onClose }: NewChatDialogProps) {
   const [phone, setPhone] = useState('');
   const [error, setError] = useState<string>();
   const [submitting, setSubmitting] = useState(false);
+  // The field keeps digits only, so there's nothing to trim
+  const canSubmit = phone !== '';
 
   function handleClose() {
     setPhone('');
@@ -41,7 +43,7 @@ export function NewChatDialog({ open, onClose }: NewChatDialogProps) {
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
-    if (!credentials || submitting || phone.trim() === '') return;
+    if (!credentials || submitting || !canSubmit) return;
 
     setSubmitting(true);
     const result = await startChat(credentials, phone);
@@ -82,7 +84,7 @@ export function NewChatDialog({ open, onClose }: NewChatDialogProps) {
           <Button
             type="submit"
             size="medium"
-            disabled={phone.trim() === ''}
+            disabled={!canSubmit}
           >
             {submitting ? t.newChat.submitting : t.newChat.submit}
           </Button>

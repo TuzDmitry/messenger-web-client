@@ -1,5 +1,5 @@
 import { useChats } from '@/store/chats';
-import { ApiError, type Credentials } from '@/api/client';
+import { ApiError, QUOTA_EXCEEDED, TOO_MANY_REQUESTS, type Credentials } from '@/api/client';
 import { checkAccount } from '@/api/methods';
 import { normalizePhone } from '@/lib/recipient';
 import { t } from '@/i18n';
@@ -41,8 +41,10 @@ function describeError(error: unknown): string {
   // 200 with `{ status: false, reason }`: the instance isn't ready
   if (error.status === 200) return t.newChat.errors.notAuthorized;
   if (error.status === 400) return t.newChat.errors.invalidPhone;
-  if (error.status === 466) return t.newChat.errors.quota;
-  if (error.status === 429 || error.status === 469) return t.newChat.errors.tooManyRequests;
+  if (error.status === QUOTA_EXCEEDED) return t.newChat.errors.quota;
+  if (error.status === 429 || error.status === TOO_MANY_REQUESTS) {
+    return t.newChat.errors.tooManyRequests;
+  }
 
   return t.newChat.errors.http(error.status);
 }

@@ -1,6 +1,6 @@
 import { useChats } from '@/store/chats';
 import { useConnection } from '@/store/connection';
-import { ApiError, type Credentials } from '@/api/client';
+import { ApiError, isUnauthorized, type Credentials } from '@/api/client';
 import { deleteNotification, receiveNotification } from '@/api/methods';
 import { parseNotificationBody } from '@/api/notifications';
 
@@ -84,7 +84,7 @@ export async function runPoller(creds: Credentials, { signal, onUnauthorized }: 
         await sleep(MIN_GAP_AFTER_BUSY_MS, signal);
         continue;
       }
-      if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
+      if (isUnauthorized(error)) {
         onUnauthorized();
 
         return;

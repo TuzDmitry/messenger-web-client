@@ -1,11 +1,23 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { ApiError, buildUrl, request, type Credentials } from './client';
+import { ApiError, buildUrl, isUnauthorized, request, type Credentials } from './client';
 
 const creds: Credentials = {
   apiUrl: 'https://api.green-api.com',
   idInstance: '1101000001',
   apiTokenInstance: 'token123',
 };
+
+describe('isUnauthorized', () => {
+  it.each([
+    [new ApiError('m', 401, null), true],
+    [new ApiError('m', 403, null), true],
+    [new ApiError('m', 404, null), false],
+    [new ApiError('m', 0, null), false],
+    [new Error('401'), false],
+  ])('%o → %s', (error, expected) => {
+    expect(isUnauthorized(error)).toBe(expected);
+  });
+});
 
 describe('buildUrl', () => {
   it('builds the base method URL', () => {

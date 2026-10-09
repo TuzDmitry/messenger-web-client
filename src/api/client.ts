@@ -43,6 +43,15 @@ export class ApiError extends Error {
   }
 }
 
+/** GREEN-API's own statuses, not standard HTTP ones. */
+export const QUOTA_EXCEEDED = 466;
+export const TOO_MANY_REQUESTS = 469;
+
+/** The token was rejected: wrong or revoked (401), or no access to the instance (403). */
+export function isUnauthorized(error: unknown): boolean {
+  return error instanceof ApiError && (error.status === 401 || error.status === 403);
+}
+
 /** `{apiUrl}/waInstance{idInstance}/{method}/{apiTokenInstance}[/{path}][?query]` */
 export function buildUrl(creds: Credentials, method: string, options: UrlOptions = {}): string {
   const base = creds.apiUrl.trim().replace(/\/+$/, '');

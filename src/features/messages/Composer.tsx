@@ -25,12 +25,14 @@ export function Composer({ chatId }: ComposerProps) {
   useLayoutEffect(() => {
     const textarea = textareaRef.current;
     if (!textarea) return;
+
     textarea.style.height = 'auto';
     textarea.style.height = `${textarea.scrollHeight}px`;
   }, [text]);
 
   function send() {
     if (!credentials || !canSend) return;
+
     void sendText(credentials, chatId, text.trim());
     setText('');
   }
@@ -42,6 +44,7 @@ export function Composer({ chatId }: ComposerProps) {
   // Enter sends, Shift+Enter adds a line; never while an IME composition is in progress
   function handleKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
     if (event.key !== 'Enter' || event.shiftKey || event.nativeEvent.isComposing) return;
+
     event.preventDefault();
     send();
   }
