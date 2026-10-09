@@ -31,6 +31,11 @@ export function AppLayout() {
     setConfirmingSignOut(false);
   }
 
+  // Not `onConfirm={signOut}`: the click event would land in its `notice` argument
+  function handleSignOut() {
+    signOut();
+  }
+
   function openNewChatDialog() {
     setCreatingChat(true);
   }
@@ -107,7 +112,7 @@ export function AppLayout() {
           description={t.signOutDialog.description}
           confirmLabel={t.signOutDialog.confirm}
           cancelLabel={t.signOutDialog.cancel}
-          onConfirm={signOut}
+          onConfirm={handleSignOut}
           onCancel={closeSignOutDialog}
         />
       </div>

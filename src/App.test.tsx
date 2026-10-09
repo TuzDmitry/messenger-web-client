@@ -147,4 +147,22 @@ describe('App', () => {
 
     expect(api.unexpected).toEqual([]);
   });
+
+  it('signs out back to an empty login screen', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.type(screen.getByLabelText(t.auth.idInstance), '4100000000');
+    await user.type(screen.getByLabelText(t.auth.apiTokenInstance), 'token');
+    await user.click(screen.getByRole('button', { name: t.auth.submit }));
+    await screen.findByRole('heading', { name: t.chats.title });
+
+    await user.click(screen.getByRole('button', { name: t.nav.signOut }));
+    await user.click(screen.getByRole('button', { name: t.signOutDialog.confirm }));
+
+    expect(await screen.findByRole('heading', { name: t.auth.title })).toBeTruthy();
+    // No leftover error and no saved draft: the credentials are gone
+    expect(screen.getByRole('alert').textContent).toBe('');
+    expect(screen.getByLabelText<HTMLInputElement>(t.auth.idInstance).value).toBe('');
+  });
 });
